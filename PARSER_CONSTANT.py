@@ -72,6 +72,8 @@ class Packing(Enum):
     PackAsManyAsPossible = 7
     Undefined = None
 
+#needs to implement from for packing
+
 class DataFormatInfo:
     #this needs some checking adding 
     def __init__(self,interleave,packing,data_sign,image_sense,line_padding,channel_padding,reserved):
@@ -83,6 +85,68 @@ class DataFormatInfo:
         #self.channel_padding = 
         self.reserved = [ struct.pack('>q',ctypes.c_ulong(0).value)*20 ]
 
+class ImageChannel():
+    def __init__(self,designator,bit_depth,pixels_per_line,lines_per_element,min_data,min_quantity,max_data,max_quantity):
+        pass
+
+class Orientation(Enum):
+    TopToBottomLeftToRight = 0
+    TopToBottomRightToLeft = None
+    BottomToTopLeftToRight = None
+    BottomToTopRightToLeft = None
+    LeftToRightTopToBottom = None
+    RightToLeftTopToBottom = None
+    LeftToRightBottomToTop = None
+    RightToLeftBottomToTop = None
+    Undefined = None
+
+
+def from(x):
+    #needs more completion
+    #check if typeof(x) == u8 and than do this
+    if isinstance(x, Orientation):
+        if x.value == 0:
+            return x.TopToBottomLeftToRight
+        if x.value == 1:
+            return x.TopToBottomRightToLeft
+        if x.value == 2:
+            return x.BottomToTopLeftToRight
+        else:
+            return x.BottomToTopRightToLeft
+
+
+class ImageInfo :
+    def __init__(self,image_orientation,number_of_elements,channel,white_point,red_primary,green_primary,blue_primary,label_text):
+        pass
+    """
+        impl Default for ImageInfo {
+        fn default() -> Self {
+            Self {
+                image_orientation: Orientation::Undefined,
+                number_of_elements: 1,
+                channel: [ImageChannel::default(); MAX_ELEMENTS],
+                white_point: [0.; 2],
+                red_primary: [0.; 2],
+                green_primary: [0.; 2],
+                blue_primary: [0.; 2],
+                label_text: String::new(),
+            }
+        }
+    }
+    """
+
+class OriginationInfo:
+    def __init__(self,x_offset,y_offset,source_image_file_name,source_date,source_time,input_device,input_device_model_number,input_device_serial_number,x_device_pitch,y_device_pitch,gamma):
+        pass
+
+class FilmInfo:
+    def __init__(self,film_manufacturing_id_code,film_type,perfs_offset,prefix,count,format,frame_position,frame_rate,frame_id,slate_info):
+        pass
+
+class Header:
+    def __init__(self,image_info,data_format_info,origination_info,film_info,user_info):
+        pass
+    
 x = FileInformation(MAGIC_COOKIE,4,5,100,200,50,"2".encode('utf-8'),"alabala".encode('utf-8'),"11:22:2022".encode('utf-8'),"".encode('utf-8'))
 print(x.creation_date)
 
