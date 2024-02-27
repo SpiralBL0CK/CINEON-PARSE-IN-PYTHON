@@ -101,7 +101,7 @@ class Orientation(Enum):
     Undefined = None
 
 
-def from(x):
+def fromimple(x):
     #needs more completion
     #check if typeof(x) == u8 and than do this
     if isinstance(x, Orientation):
